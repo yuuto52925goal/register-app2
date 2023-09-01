@@ -11,7 +11,6 @@ const Login = () => {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
   
-    /* ↓関数「handleSubmit」を定義 */
     const handleSubmit = async (e) => {
       e.preventDefault();
   
@@ -26,7 +25,6 @@ const Login = () => {
       }
     };
   
-    /* ↓ログインを判定する設定 */
     const [user, setUser] = useState();
   
     useEffect(() => {
@@ -36,13 +34,12 @@ const Login = () => {
     });
   return (
     <>
-        {/* ↓ログインしている場合、マイページにリダイレクトする設定 */}
       {user ? (
         <Navigate to={`/`} />
       ) : (
-        <>
-            <h1>ログインページ</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="container-box">
+            <h1 className="container-title container-box">ログイン</h1>
+            <form onSubmit={handleSubmit} className="container-form">
               <div>
                 <label>メールアドレス</label>
                 {/* ↓「value」と「onChange」を追加 */}
@@ -51,6 +48,7 @@ const Login = () => {
                   type="email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
+                  className="container-input"
                 />
               </div>
               <div>
@@ -61,12 +59,13 @@ const Login = () => {
                   type="password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
+                  className="container-input"
                 />
               </div>
-              <button>ログイン</button>
-              <p>新規登録は<Link to={`/register/`}>こちら</Link></p>
+              <button className="container-button">ログイン</button>
+              <p className="container-script">新規登録は<Link to={`/register/`}>こちら</Link></p>
             </form>
-        </>
+        </div>
       )}
     </>
   );

@@ -33,13 +33,12 @@ const Register = () => {
 
   return (
     <>
-      {/* ↓ログインしていればマイページを表示 */}
       {user ? (
         <Navigate to={`/`} />
       ) : (
-        <>
-          <h1>新規登録</h1>
-          <form onSubmit={handleSubmit}>
+        <div className="container-box">
+          <h1 className="container-title">新規登録</h1>
+          <form onSubmit={handleSubmit} className="container-form">
             <div>
               <label>メールアドレス</label>
               <input
@@ -47,6 +46,7 @@ const Register = () => {
                 type="email"
                 value={registerEmail}
                 onChange={(e) => setRegisterEmail(e.target.value)}
+                className="container-input"
               />
             </div>
             <div>
@@ -56,12 +56,13 @@ const Register = () => {
                 type="password"
                 value={registerPassword}
                 onChange={(e) => setRegisterPassword(e.target.value)}
+                className="container-input"
               />
             </div>
-            <button>登録する</button>
-            <p>ログインは<Link to={`/login/`}>こちら</Link></p>
+            <button className="container-button">登録する</button>
+            <p className="container-script">ログインは<Link to={`/login/`}>こちら</Link></p>
           </form>
-        </>
+        </div>
       )}
     </>
   );
