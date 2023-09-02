@@ -76,19 +76,27 @@ button:hover {
 }
 
 .watch-list-button{
-  background-color: #0F1014;
-  color: white;
-  border: 1px solid white;
-  outline: auto;
-  font-size: medium;
+  background-color: #007bff; 
+  color: #fff; 
+  border: 2px solid #007bff; 
+  outline: none; 
+  font-size: 18px; 
+  padding: 10px 20px; 
   margin: 5px;
+  cursor: pointer; 
+  border-radius: 5px; 
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.watch-list-button:hover {
+  background-color: #0056b3; /* ホバー時の背景色 */
+  color: #fff; /* ホバー時のテキストカラー */
+}
 
 .watch-list-show{
-  display: flex; /* 写真とテキストを横並びにする */
-  align-items: center; /* 写真とテキストを垂直方向に中央揃えにする */
-  margin-bottom: 20px; /* 各リストアイテムの下にスペースを追加 */
+  display: flex; 
+  align-items: center;
+  margin-bottom: 20px; 
 }
 
 .saved-movie {
@@ -126,4 +134,20 @@ button:hover {
   color: #ffffff; 
   transition: background-color 0.3s ease;
   margin: 20px;
+}
+
+.evaluate-text{
+  display: flex;
+}
+
+.star-icon{
+  color: gold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transform-style: preserve-3d;
+  font-size: 24px;
+}
+
+.reviewed-number{
+  font-size: 24px;
+  color: aqua;
 }

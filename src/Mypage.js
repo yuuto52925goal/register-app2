@@ -3,10 +3,12 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./FirebaseConfig.js";
 import {
   useNavigate,
-  Navigate
+  Navigate,
+  Link
 } from "react-router-dom";
 import MovieShowOff from "./components/MovieShowOff.js";
 import WatchList from "./components/WatchList.js";
+
 
 const Mypage = () => {
     const [user, setUser] = useState(null);
@@ -28,6 +30,7 @@ const Mypage = () => {
       navigate("/login/");
     }
 
+    
   return (
     <>
       {/* ↓「loading」がfalseのときにマイページを表示する設定 */}

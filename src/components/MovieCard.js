@@ -5,7 +5,6 @@ export default function MovieCard(props) {
 
     const IMAGE_PATH =  "https://image.tmdb.org/t/p/w500/"
 
-
   return (
     <div className='movie-card' onClick={() => setSelectedMovie(movie)}>
         {movie.poster_path ? <img className="movie-cover" src={`${IMAGE_PATH}${movie.poster_path}`} alt="" />
