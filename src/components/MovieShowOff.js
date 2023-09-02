@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import MovieCard from "./MovieCard"
-import "./MovieShowOff"
+import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { db } from '../FirebaseConfig';
 
-export default function MovieShowOff() {
+
+export default function MovieShowOff({user}) {
 
     const [movies, setMovies] = useState([])
     const [selectedMovie, setSelectedMovie] = useState({})
@@ -45,6 +47,25 @@ export default function MovieShowOff() {
         fetchFunc(searchURL)
       }
     }
+
+    const handleAddToWatchLater = async(addingMovie) => {
+      try{
+          const userDocRef = doc(db, 'users', user.uid);
+          const movieCollectionRef = collection(userDocRef, 'movies');
+
+          const querySnapshot = await getDocs(movieCollectionRef);
+          const movies = querySnapshot.docs.map((doc) => doc.data());
+
+          if (!movies.some((movie) => movie.id === addingMovie.id)) {
+            await addDoc(movieCollectionRef, addingMovie);
+          } else {
+            alert('この映画はすでにウォッチリストに存在します。');
+          }
+      }catch(error){
+        console.error("Error adding document", error)
+      }
+    }
+    
     
   return (
     <>
@@ -67,6 +88,7 @@ export default function MovieShowOff() {
         <div className="hero-content max-center">
           <h1 className="hero-title">{selectedMovie.title}</h1>
           <p className="hero-overview">{selectedMovie.overview}</p>
+          <button className='watch-list-button' onClick={()=>handleAddToWatchLater(selectedMovie)}>Add to Watch later</button>
         </div>
       </div>
 

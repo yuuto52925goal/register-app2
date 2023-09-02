@@ -6,24 +6,27 @@ import {
   Navigate
 } from "react-router-dom";
 import MovieShowOff from "./components/MovieShowOff.js";
+import WatchList from "./components/WatchList.js";
 
 const Mypage = () => {
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
-      onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser); 
         setLoading(false);
       });
+
+      return () => unsubscribe();
     }, []);
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const logout = async () => {
-    await signOut(auth);
-    navigate("/login/");
-  }
+    const logout = async () => {
+      await signOut(auth);
+      navigate("/login/");
+    }
 
   return (
     <>
@@ -34,7 +37,8 @@ const Mypage = () => {
             <Navigate to={`/login/`} />
           ) : (
             <>
-              <MovieShowOff />
+              <MovieShowOff user={user} />
+              <WatchList user={user} />
               <footer className="footer-box">
                 <p className="container-script container-box">{user?.email}</p>
                 <button onClick={logout} className="logout-button">ログアウト</button>
