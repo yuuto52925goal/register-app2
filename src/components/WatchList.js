@@ -1,12 +1,14 @@
 import React,{useEffect} from 'react'
 import { useRecoilState } from 'recoil'
 import { dataState } from '../recoilState'
-import { collection, doc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, deleteDoc } from 'firebase/firestore';
 import { db } from '../FirebaseConfig';
 
 
 export default function WatchList({user}) {
 
+    // このstateはウォッチリストですよね？？
+    // わざわざRecoil使ってグローバル変数にする必要ないと思うのでuseStateで良いと思います！
     const [movies,setMovies] = useRecoilState(dataState);
 
     const fetchMovieAndSetState = async(userUid) => {
@@ -31,20 +33,15 @@ export default function WatchList({user}) {
         fetchMovieAndSetState(user.uid)
     },[user,movies])
 
-    const deleteWatchList = (movie, user) => {
-        const collectionPath = 'movie';
+    const deleteWatchList = async (movie, user) => {
         const documentPath = `${user.uid}_${movie.id}`;
-
-        db.collection(collectionPath)
-        .doc(documentPath)
-        .delete()
-            .then(() => {
-              console.log('ドキュメントが削除されました');
-            })
-            .catch((error) => {
-              console.error('エラーが発生しました: ', error);
-        });
-    }
+    
+        const docRef = doc(db, 'movie', documentPath);
+        // 削除の方法が間違っていたので修正しました！firebaseのバージョンによって記述方法が異なるのでバージョンに合った記述方法を確認してみてください！
+        await deleteDoc(docRef);
+        // 削除は修正したが、moviesのstateを更新する処理がないので、ここでstateからも削除する記述を追記
+        console.log('ドキュメントが削除されました');
+    };
 
     const IMAGE_PATH = "https://image.tmdb.org/t/p/w342/"
   return (
