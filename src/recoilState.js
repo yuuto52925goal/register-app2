@@ -5,7 +5,7 @@ export const dataState = atom({
     default:[]
 })
 
-export const switchChange = atom({
-    key:"swtchChange",
-    default:(true)
+export const switchChangeState = atom({
+    key:"swtchChangeState",
+    default:[]
 })

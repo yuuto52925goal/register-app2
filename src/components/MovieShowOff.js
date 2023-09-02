@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import MovieCard from "./MovieCard"
 import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../FirebaseConfig';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { switchChange } from '../recoilState';
+import { useSetRecoilState } from 'recoil';
+import { switchChangeState } from '../recoilState';
 
 
 
@@ -13,8 +13,7 @@ export default function MovieShowOff({user}) {
     const [movies, setMovies] = useState([])
     const [selectedMovie, setSelectedMovie] = useState({})
     const [searchKey, setSearchKey] = useState("")
-    const setUpdateWatchList = useSetRecoilState(switchChange);
-    const updateWatchList = useRecoilState(switchChange);
+    const setUpdateWatchLists = useSetRecoilState(switchChangeState);
     
     const api_key = "3caa6843eb9ade6937f6647665fc4b58"
     const url = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`;
@@ -86,10 +85,11 @@ export default function MovieShowOff({user}) {
 
           const querySnapshot = await getDocs(movieCollectionRef);
           const movies = querySnapshot.docs.map((doc) => doc.data());
-
+          const updateWatchList = false
+          setUpdateWatchLists(updateWatchList)
+          
           if (!movies.some((movie) => movie.id === addingMovie.id)) {
             await addDoc(movieCollectionRef, addingMovie);
-            setUpdateWatchList(!updateWatchList)
           } else {
             alert('この映画はすでにウォッチリストに存在します。');
           }

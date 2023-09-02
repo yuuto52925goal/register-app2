@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
-import { useRecoilState } from 'recoil'
-import { dataState, switchChange } from '../recoilState'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { dataState, switchChangeState } from '../recoilState'
 import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { db } from '../FirebaseConfig';
 
@@ -8,7 +8,8 @@ import { db } from '../FirebaseConfig';
 export default function WatchList({user}) {
 
     const [watchMovie, setWatchMovie] = useState([]);
-    const updateWatchList = useRecoilState(switchChange)
+    const updateWatchList = useRecoilValue(switchChangeState)
+    const setUpdateWatchList = useSetRecoilState(switchChangeState)
 
     const fetchMovieAndSetState = async(userUid) => {
             try {
@@ -20,6 +21,7 @@ export default function WatchList({user}) {
                     moviesData.push({ Id: doc.id, ...doc.data() });
                 });
                 setWatchMovie(moviesData);
+                setUpdateWatchList(true)
             } catch (error) {
                 console.error('Error fetching movies', error);
             }
@@ -29,6 +31,12 @@ export default function WatchList({user}) {
     useEffect(() => {
         fetchMovieAndSetState(user.uid)
     },[])
+
+    useEffect(()=>{
+        if (updateWatchList === false){
+            fetchMovieAndSetState(user.uid)
+        }
+    },[updateWatchList])
 
     const deleteWatchList = async(movie, user) => {
         try {
