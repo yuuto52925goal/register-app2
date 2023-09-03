@@ -39,14 +39,14 @@ const Mypage = () => {
           {!user ? (
             <Navigate to={`/login/`} />
           ) : (
-            <>
+            <div className="mypage-container">
               <MovieShowOff user={user} />
               <WatchList user={user} />
               <footer className="footer-box">
                 <p className="container-script container-box">{user?.email}</p>
                 <button onClick={logout} className="logout-button">ログアウト</button>
               </footer>
-            </>
+            </div>
           )}
         </>
       )}

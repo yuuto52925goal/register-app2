@@ -49,6 +49,18 @@ body{
   align-items: flex-end;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    min-height: 400px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 300px;
+  }
+}
+
 .hero-content{
   max-width: 70%;
   padding-bottom: 60px;
@@ -150,4 +162,9 @@ button:hover {
 .reviewed-number{
   font-size: 24px;
   color: aqua;
+}
+
+.mypage-container{
+  overflow-y: auto;
+  max-height: auto;
 }
