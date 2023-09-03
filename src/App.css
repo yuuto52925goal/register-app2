@@ -57,7 +57,7 @@ body{
 
 @media (max-width: 480px) {
   .hero {
-    background-size: 100% auto;
+    background-size: cover;
   }
 }
 
