@@ -15,7 +15,7 @@ export default function MovieShowOff({user}) {
     const [searchKey, setSearchKey] = useState("")
     const setUpdateWatchLists = useSetRecoilState(switchChangeState);
     
-    const api_key = "3caa6843eb9ade6937f6647665fc4b58"
+    const api_key = process.env.REACT_APP_MOVIE_APP
     const url = `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`;
 
     const searchURL = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${searchKey}&include_adult=false&language=en-US&page=1`;
